@@ -19,5 +19,6 @@ Registro cronológico del flujo de trabajo. Cada entrada corresponde a un commit
 | 13 | T7 · Verificación | `feature/manejo-errores` | Ejecuté la suite completa (100 pruebas) y 6 pruebas manuales contra el servidor (registro, consulta, duplicado, JSON inválido, campos faltantes y persistencia tras reinicio). Documenté resultado esperado y observado y la matriz de trazabilidad. Corregí la función auxiliar de PowerShell, que no mostraba el cuerpo de los errores en la versión 5.1. |
 | 14 | T9 · Diseño de evolución | `feature/diseno-evolucion` | Diseñé las notificaciones de prioridad Alta (outbox transaccional, restricción única, reintentos con espera exponencial) y la validación de tienda contra el catálogo externo (timeout, reintento, caché, circuit breaker, registro pendiente ante indisponibilidad). Elegí código sobre Power Automate y documenté en qué caso usaría este último. |
 | 15 | T8 · README | `release/1.0.0` | Escribí el README: ejecución, pruebas, ejemplos, códigos de respuesta, supuestos, decisión descartada, limitación, estructura del proyecto, mapa de la documentación, flujo de ramas y dependencias con sus licencias. |
+| 16 | T10 · Bitácora de IA | `release/1.0.0` | Documenté el uso de IA: interacciones que influyeron en la entrega, qué acepté o cambié, cómo lo comprobé y reflexión final. |
 
 **Tiempo real invertido:** _(se completa al cierre)_
