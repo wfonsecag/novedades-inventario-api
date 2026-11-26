@@ -1,5 +1,6 @@
 """Capa HTTP: recibe la petición, delega en el servicio y arma la respuesta."""
 import json
+from typing import List, Optional
 
 from fastapi import APIRouter, Request
 
@@ -54,3 +55,16 @@ async def _leer_json(request: Request) -> dict:
 async def registrar_solicitud(request: Request) -> Solicitud:
     datos = await _leer_json(request)
     return _servicio(request).registrar(datos)
+
+
+@router.get(
+    "",
+    response_model=List[Solicitud],
+    summary="Consultar solicitudes",
+    description="Filtros opcionales y combinables. Se aceptan variantes de escritura (p. ej. 'alta', 'en_proceso').",
+    responses={422: {"description": "Filtro con valor no reconocido"}},
+)
+def listar_solicitudes(
+    request: Request, estado: Optional[str] = None, prioridad: Optional[str] = None
+) -> List[Solicitud]:
+    return _servicio(request).listar(estado=estado, prioridad=prioridad)
