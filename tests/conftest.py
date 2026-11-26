@@ -12,4 +12,6 @@ def db_path(tmp_path):
 
 @pytest.fixture
 def client(db_path):
-    return TestClient(create_app(db_path))
+    # El "with" ejecuta el arranque de la aplicación (lifespan), igual que en producción.
+    with TestClient(create_app(db_path)) as cliente:
+        yield cliente
