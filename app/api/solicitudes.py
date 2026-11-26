@@ -3,9 +3,9 @@ import json
 
 from fastapi import APIRouter, Request
 
-from app.errors import JsonInvalidoError
-from app.schemas import Solicitud
-from app.service import ServicioSolicitudes
+from app.core.errors import JsonInvalidoError
+from app.schemas.solicitud import Solicitud
+from app.services.solicitudes import ServicioSolicitudes
 
 router = APIRouter(prefix="/solicitudes", tags=["Solicitudes"])
 

@@ -2,10 +2,10 @@ from datetime import datetime, timezone
 
 import pytest
 
-from app.errors import DuplicadoError, ValidacionError
-from app.repository import RepositorioSQLite
-from app.schemas import Estado, Prioridad, Tipo
-from app.service import ServicioSolicitudes
+from app.core.errors import DuplicadoError, ValidacionError
+from app.repositories.solicitudes import RepositorioSQLite
+from app.schemas.solicitud import Estado, Prioridad, Tipo
+from app.services.solicitudes import ServicioSolicitudes
 
 AHORA = datetime(2026, 11, 26, 15, 10, 0, tzinfo=timezone.utc)
 

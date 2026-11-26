@@ -3,10 +3,10 @@ import re
 from datetime import datetime, timezone
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type
 
-from app.errors import ValidacionError, detalle
-from app.normalization import limpiar_espacios, normalizar_claves, resolver_catalogo
-from app.repository import Repositorio
-from app.schemas import (
+from app.core.errors import ValidacionError, detalle
+from app.core.normalization import limpiar_espacios, normalizar_claves, resolver_catalogo
+from app.repositories.solicitudes import Repositorio
+from app.schemas.solicitud import (
     ESTADO_INICIAL,
     PRIORIDAD_POR_DEFECTO,
     TIPO_POR_DEFECTO,

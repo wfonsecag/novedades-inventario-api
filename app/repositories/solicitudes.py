@@ -3,8 +3,8 @@ import sqlite3
 from contextlib import closing
 from typing import List, Optional, Protocol
 
-from app.errors import DuplicadoError, detalle
-from app.schemas import Estado, Prioridad, Solicitud
+from app.core.errors import DuplicadoError, detalle
+from app.schemas.solicitud import Estado, Prioridad, Solicitud
 
 _CREAR_TABLA = """
 CREATE TABLE IF NOT EXISTS solicitudes (

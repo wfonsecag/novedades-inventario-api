@@ -2,9 +2,9 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from app.errors import DuplicadoError
-from app.repository import RepositorioSQLite
-from app.schemas import Estado, Prioridad, Solicitud, Tipo
+from app.core.errors import DuplicadoError
+from app.repositories.solicitudes import RepositorioSQLite
+from app.schemas.solicitud import Estado, Prioridad, Solicitud, Tipo
 
 BASE = datetime(2026, 11, 26, 15, 0, 0, tzinfo=timezone.utc)
 

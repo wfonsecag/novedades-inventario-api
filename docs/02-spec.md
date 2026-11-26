@@ -43,7 +43,7 @@ Sigo **Spec-Driven Development**: primero especifico (contexto), luego decido (A
 
 ### T1 · Normalización y catálogos
 - **Rama:** `feature/modelo-persistencia`
-- **Archivos:** `app/normalization.py`, `app/schemas.py`, `app/errors.py`, `tests/test_normalization.py`
+- **Archivos:** `app/core/normalization.py`, `app/schemas/solicitud.py`, `app/core/errors.py`, `tests/test_normalization.py`
 - **Qué hace:** catálogos `Tipo`, `Prioridad`, `Estado`; funciones para normalizar nombres de campo (con detección de ambigüedad), valores de texto y resolución contra catálogo; modelo de salida `Solicitud`; excepciones de dominio (`ValidacionError`, `DuplicadoError`, `JsonInvalidoError`).
 - **Cubre:** RF-11, CB-11, CB-15, CB-22
 - **Terminado cuando:** las variantes de escritura resuelven al valor canónico y los nombres de campo ambiguos se detectan.
@@ -51,7 +51,7 @@ Sigo **Spec-Driven Development**: primero especifico (contexto), luego decido (A
 
 ### T2 · Repositorio SQLite
 - **Rama:** `feature/modelo-persistencia` (misma rama que T1)
-- **Archivos:** `app/repository.py`, `tests/test_repository.py`
+- **Archivos:** `app/repositories/solicitudes.py`, `tests/test_repository.py`
 - **Qué hace:** crea la tabla si no existe; `insertar` (traduce `IntegrityError` a `DuplicadoError`); `listar` con filtros opcionales y orden por `fecha_creacion`, `id`.
 - **Cubre:** RF-09, RF-10, RNF-05, CB-05, CB-21
 - **Terminado cuando:** inserta y lista, rechaza el duplicado sin alterar el original y los datos persisten al reabrir el archivo.
@@ -59,7 +59,7 @@ Sigo **Spec-Driven Development**: primero especifico (contexto), luego decido (A
 
 ### T3 · Servicio de solicitudes
 - **Rama:** `feature/registro-solicitudes`
-- **Archivos:** `app/service.py`, `tests/test_service.py`
+- **Archivos:** `app/services/solicitudes.py`, `tests/test_service.py`
 - **Qué hace:** valida y convierte `id`, `tienda`, `descripcion`; aplica valores por defecto trazables a `tipo` y `prioridad`; fija estado `Pendiente`; asigna `fecha_creacion` en UTC; ignora campos no definidos.
 - **Cubre:** RF-06, RF-08, RF-12, RN-01 a RN-07, CB-01 a CB-04, CB-06 a CB-14, CB-16, CB-23, CB-24
 - **Terminado cuando:** todas las reglas del §4 del contexto tienen prueba unitaria y pasan.
@@ -67,7 +67,7 @@ Sigo **Spec-Driven Development**: primero especifico (contexto), luego decido (A
 
 ### T4 · Endpoint `POST /solicitudes`
 - **Rama:** `feature/registro-solicitudes` (misma rama que T3)
-- **Archivos:** `app/api.py`, `app/main.py`, `tests/test_api_post.py`
+- **Archivos:** `app/api/solicitudes.py`, `app/main.py`, `tests/test_api_post.py`
 - **Qué hace:** lee el cuerpo crudo como JSON (sin depender de `Content-Type`), invoca el servicio, responde 201; traduce errores de dominio a 400/409/422 con el formato uniforme.
 - **Cubre:** RF-01, RF-07, RF-09, CB-05, CB-17, CB-25
 - **Terminado cuando:** el ejemplo del §4 del contexto responde 201 y los errores llegan con el formato del §6.3.
@@ -75,7 +75,7 @@ Sigo **Spec-Driven Development**: primero especifico (contexto), luego decido (A
 
 ### T5 · Endpoint `GET /solicitudes`
 - **Rama:** `feature/consulta-solicitudes`
-- **Archivos:** `app/api.py`, `tests/test_api_get.py`
+- **Archivos:** `app/api/solicitudes.py`, `tests/test_api_get.py`
 - **Qué hace:** lista con filtros `estado` y `prioridad` normalizados y combinables; parámetro vacío = sin filtro; valor desconocido = 422 con valores admitidos.
 - **Cubre:** RF-02 a RF-05, CB-18 a CB-20
 - **Terminado cuando:** las combinaciones de filtros devuelven exactamente las solicitudes esperadas.
@@ -83,7 +83,7 @@ Sigo **Spec-Driven Development**: primero especifico (contexto), luego decido (A
 
 ### T6 · Manejo global de errores
 - **Rama:** `feature/manejo-errores`
-- **Archivos:** `app/main.py`, `app/errors.py`, `tests/test_errores.py`
+- **Archivos:** `app/main.py`, `app/core/errors.py`, `tests/test_errores.py`
 - **Qué hace:** formato uniforme para 404, 405 y 500 (sin traza); ninguna entrada del cliente produce 500.
 - **Cubre:** RF-07, RNF-04, CB-26
 - **Terminado cuando:** rutas y métodos inexistentes y un error interno simulado responden con el formato uniforme.
