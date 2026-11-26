@@ -12,7 +12,7 @@ class ErrorDeDominio(Exception):
         self.detalles = detalles or []
 
     def como_respuesta(self) -> dict:
-        return {"error": self.codigo, "mensaje": self.mensaje, "detalles": self.detalles}
+        return respuesta_uniforme(self.codigo, self.mensaje, self.detalles)
 
 
 class JsonInvalidoError(ErrorDeDominio):
@@ -32,3 +32,15 @@ class DuplicadoError(ErrorDeDominio):
 
 def detalle(campo: str, problema: str) -> Dict[str, str]:
     return {"campo": campo, "problema": problema}
+
+
+# Errores del framework (rutas y métodos) traducidos al formato uniforme
+CODIGOS_HTTP = {
+    404: ("NO_ENCONTRADO", "La ruta solicitada no existe."),
+    405: ("METODO_NO_PERMITIDO", "El método HTTP no está permitido en esta ruta."),
+}
+MENSAJE_ERROR_INTERNO = "Ocurrió un error inesperado. Intenta de nuevo más tarde."
+
+
+def respuesta_uniforme(codigo: str, mensaje: str, detalles: Optional[List[Dict[str, str]]] = None) -> dict:
+    return {"error": codigo, "mensaje": mensaje, "detalles": detalles or []}
