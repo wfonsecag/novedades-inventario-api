@@ -119,6 +119,7 @@ Trabajé con **Spec-Driven Development**: primero especifiqué, luego decidí, l
 
 | Documento | Contenido |
 |---|---|
+| [`00-experiencia.md`](docs/00-experiencia.md) | Tres proyectos en los que participé: problema, tecnologías, contribución, decisión difícil y qué cambiaría hoy |
 | [`01-contexto.md`](docs/01-contexto.md) | Alcance, requisitos funcionales y no funcionales, entradas y salidas, reglas de negocio, casos borde y supuestos |
 | [`adr/`](docs/adr/) | Decisiones: SQLite, FastAPI y arquitectura por capas, con alternativas descartadas |
 | [`02-spec.md`](docs/02-spec.md) | Plan de construcción en tareas T0–T10 y flujo de ramas |
