@@ -9,6 +9,7 @@ htmlcov/
 
 # Base de datos local
 *.db
+*.db-journal
 
 # Secretos y configuración del editor
 .env
