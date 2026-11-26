@@ -1,8 +1,8 @@
 import pytest
 
-from app.errors import ValidacionError
-from app.normalization import limpiar_espacios, normalizar_claves, resolver_catalogo
-from app.schemas import Estado, Prioridad, Tipo
+from app.core.errors import ValidacionError
+from app.core.normalization import limpiar_espacios, normalizar_claves, resolver_catalogo
+from app.schemas.solicitud import Estado, Prioridad, Tipo
 
 
 # CB-11: variantes de escritura se resuelven al valor canónico

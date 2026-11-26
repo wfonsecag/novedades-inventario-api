@@ -4,7 +4,7 @@ import unicodedata
 from enum import Enum
 from typing import Any, Dict, Optional, Type, TypeVar
 
-from app.errors import ValidacionError, detalle
+from app.core.errors import ValidacionError, detalle
 
 E = TypeVar("E", bound=Enum)
 

@@ -4,11 +4,11 @@ from typing import Optional
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from app.api import router
+from app.api.solicitudes import router
 from app.config import get_database_path
-from app.errors import ErrorDeDominio
-from app.repository import RepositorioSQLite
-from app.service import ServicioSolicitudes
+from app.core.errors import ErrorDeDominio
+from app.repositories.solicitudes import RepositorioSQLite
+from app.services.solicitudes import ServicioSolicitudes
 
 
 def create_app(db_path: Optional[str] = None) -> FastAPI:

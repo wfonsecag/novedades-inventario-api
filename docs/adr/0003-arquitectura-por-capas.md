@@ -10,23 +10,32 @@ Busco un prototipo pequeño, funcional y entendible que otras personas puedan ma
 
 ## Decisión
 
-Organizo el código en **tres capas con dependencias en un solo sentido**, más módulos de apoyo:
+Organizo el código en **tres capas con dependencias en un solo sentido**, cada una en su propio paquete, más un paquete de utilidades transversales:
 
 ```
-api.py ──► service.py ──► repository.py ──► SQLite
-  │             │
-  └── schemas.py (modelos y catálogos) ◄──┘
-errors.py (formato uniforme de error)   normalization.py (reglas de forma)
+app/
+├── main.py                    arma la aplicación
+├── config.py                  configuración (DATABASE_PATH)
+├── api/solicitudes.py         ──► capa HTTP
+├── services/solicitudes.py    ──► capa de negocio
+├── repositories/solicitudes.py──► capa de persistencia (SQLite)
+├── schemas/solicitud.py       catálogos y modelo de salida
+└── core/
+    ├── errors.py              errores de dominio y formato uniforme
+    └── normalization.py       reglas de forma
 ```
 
-| Módulo | Responsabilidad | No hace |
+Dependencias: `api → services → repositories`; todas pueden usar `schemas` y `core`.
+
+| Paquete | Responsabilidad | No hace |
 |---|---|---|
-| `api.py` | HTTP: rutas, lectura del cuerpo, códigos de respuesta | Reglas de negocio ni SQL |
-| `service.py` | Reglas de negocio: valores por defecto, estado inicial, fecha de creación, duplicados | HTTP ni SQL |
-| `repository.py` | Guardar y consultar en SQLite | Validar ni decidir |
-| `schemas.py` | Modelos de salida y catálogos (tipo, prioridad, estado) | — |
-| `normalization.py` | Normalizar nombres de campo y valores de texto | — |
-| `errors.py` | Excepciones de dominio y su traducción al formato de error | — |
+| `api` | HTTP: rutas, lectura del cuerpo, códigos de respuesta | Reglas de negocio ni SQL |
+| `services` | Reglas de negocio: valores por defecto, estado inicial, fecha de creación, duplicados | HTTP ni SQL |
+| `repositories` | Guardar y consultar en SQLite | Validar ni decidir |
+| `schemas` | Modelos de salida y catálogos (tipo, prioridad, estado) | — |
+| `core` | Normalización y excepciones de dominio, usadas por varias capas | — |
+
+Inicialmente planteé módulos sueltos dentro de `app/`. Al crecer a ocho archivos, los agrupé en paquetes por capa para que la estructura se lea a simple vista. Si se agregan más entidades (tiendas, notificaciones), cada paquete recibe un archivo por entidad.
 
 ## Alternativas consideradas
 
@@ -39,8 +48,8 @@ errors.py (formato uniforme de error)   normalization.py (reglas de forma)
 
 **Positivas**
 - Cada capa se entiende y se prueba por separado.
-- La evolución encaja sin reescribir: la notificación y el cliente del catálogo de tiendas serían servicios que `service.py` invoca.
-- Cambiar SQLite por un motor más robusto afecta solo a `repository.py`.
+- La evolución encaja sin reescribir: la notificación y el cliente del catálogo de tiendas serían servicios nuevos en `services` que el servicio de solicitudes invoca.
+- Cambiar SQLite por un motor más robusto afecta solo al paquete `repositories`.
 
 **Negativas**
 - Más archivos que una solución plana para un problema pequeño.
