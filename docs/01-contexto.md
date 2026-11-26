@@ -14,11 +14,11 @@ Este documento responde **qué** se construye y **por qué**. El **cómo** está
 
 | En alcance | Fuera de alcance (y por qué) |
 |---|---|
-| `POST /solicitudes` | Interfaz gráfica — la prueba indica que no es necesaria |
-| `GET /solicitudes` con filtros `estado` y `prioridad` | Cambio de estado (PUT/PATCH) y borrado — no los pide la prueba; se plantean como v2 |
+| `POST /solicitudes` | Interfaz gráfica — el valor está en la API; cualquier canal puede consumirla |
+| `GET /solicitudes` con filtros `estado` y `prioridad` | Cambio de estado (PUT/PATCH) y borrado — los dejo para v2 para enfocarme en registro y consulta |
 | Validación y normalización de datos | Autenticación/autorización — prototipo local con datos ficticios |
 | Fecha de creación asignada por el servidor | Paginación — volumen de prototipo; se plantea como v2 |
-| Rechazo de duplicados por `id` | Notificaciones y validación de tienda contra catálogo externo — se diseñan en el punto 03 (`04-diseno-evolucion.md`), no se implementan |
+| Rechazo de duplicados por `id` | Notificaciones y validación de tienda contra catálogo externo — las diseño como evolución en `04-diseno-evolucion.md`, sin implementarlas |
 | Persistencia en SQLite | Despliegue en la nube |
 
 ## 2. Glosario
@@ -157,7 +157,7 @@ La comparación ignora mayúsculas, tildes, espacios repetidos, `_` y `-`. Los c
 
 | ID | Requisito |
 |---|---|
-| RNF-01 | **Ejecutable con pocos pasos:** Python 3.11+, `pip install -r requirements.txt` y un comando para iniciar. Sin servicios externos. |
+| RNF-01 | **Ejecutable con pocos pasos:** Python 3.10+, `pip install -r requirements.txt` y un comando para iniciar. Sin servicios externos. |
 | RNF-02 | **Mantenible:** separación en capas (API → servicio → repositorio); catálogos y valores por defecto en un único lugar. |
 | RNF-03 | **Probado:** pruebas automatizadas con `pytest` que cubren casos válidos, de error y de borde; base de datos aislada por prueba. |
 | RNF-04 | **Robusto:** ninguna entrada del cliente produce un 500; los errores internos no exponen trazas. |
@@ -213,12 +213,12 @@ La comparación ignora mayúsculas, tildes, espacios repetidos, `_` y `-`. Los c
 
 | ID | Supuesto | Alternativa si el negocio lo define distinto |
 |---|---|---|
-| S-01 | El `id` lo asigna el canal (la prueba exige "evitar duplicados por identificador") | Generarlo en el servidor y usar otra llave de idempotencia |
-| S-02 | Catálogo de tipos de §5.1 (el reto solo muestra "Diferencia de inventario") | Se cambia en un solo lugar del código |
+| S-01 | El `id` lo asigna el canal, por eso los duplicados se controlan por identificador | Generarlo en el servidor y usar otra llave de idempotencia |
+| S-02 | Catálogo de tipos de §5.1, definido a partir de las novedades más comunes en tienda | Se cambia en un solo lugar del código |
 | S-03 | Prioridades `Alta/Media/Baja` y estados `Pendiente/En proceso/Resuelta` | Ídem |
 | S-04 | Valores por defecto `Otro` y `Media` | Rechazar con 422 en lugar de asignar valor por defecto |
 | S-05 | Fechas en UTC | Mostrar en hora de Colombia en la capa de presentación |
-| S-06 | No hay catálogo de tiendas en esta versión | Validación contra API externa (punto 03) |
+| S-06 | No hay catálogo de tiendas en esta versión | Validación contra API externa (ver `04-diseno-evolucion.md`) |
 | S-07 | Un solo proceso del servidor | Ver limitaciones |
 
 ## 12. Trade-offs y limitaciones conocidas
@@ -227,7 +227,7 @@ La comparación ignora mayúsculas, tildes, espacios repetidos, `_` y `-`. Los c
 |---|---|---|---|
 | Valores por defecto en `tipo` y `prioridad` | Ningún reporte real se pierde | Un caso urgente mal escrito queda en "Media"; "Otro" puede crecer | `*_reportado` permite encontrarlos; v2: alertas o sinónimos |
 | Ignorar campos no definidos | Los canales pueden evolucionar sin romper la integración | Un error de escritura en un campo opcional pasa sin aviso | Los opcionales tienen valores por defecto seguros |
-| SQLite | Persistencia sin instalar nada; unicidad garantizada por la base | No escala a múltiples instancias ni a escritura intensiva | Repositorio detrás de una interfaz → PostgreSQL en v2 (ver ADR-0001) |
+| SQLite | Persistencia sin instalar nada; unicidad garantizada por la base | No escala a múltiples instancias ni a escritura intensiva | Repositorio detrás de una interfaz → motor más robusto en v2 (ver ADR-0001) |
 | Sin paginación | Simplicidad | Respuestas grandes con mucho volumen | v2: `limit`/`offset` |
 
 ## 13. Trazabilidad
