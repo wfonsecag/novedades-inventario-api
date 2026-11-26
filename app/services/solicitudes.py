@@ -65,6 +65,15 @@ class ServicioSolicitudes:
         self.repositorio.insertar(solicitud)
         return solicitud
 
+    def listar(self, estado: Optional[str] = None, prioridad: Optional[str] = None) -> List[Solicitud]:
+        """Lectura explícita: un filtro vacío no filtra; un valor desconocido se rechaza (CB-18, CB-19)."""
+        errores: List[Dict[str, str]] = []
+        filtro_estado = self._resolver_filtro(estado, "estado", Estado, errores)
+        filtro_prioridad = self._resolver_filtro(prioridad, "prioridad", Prioridad, errores)
+        if errores:
+            raise ValidacionError("Los filtros de la consulta no son válidos.", errores)
+        return self.repositorio.listar(estado=filtro_estado, prioridad=filtro_prioridad)
+
     # --- Reglas por campo ---------------------------------------------------
 
     @staticmethod
@@ -111,6 +120,16 @@ class ServicioSolicitudes:
                 detalle("estado", f"Una solicitud nueva solo puede crearse en estado '{ESTADO_INICIAL.value}'.")
             )
         return ESTADO_INICIAL
+
+    @staticmethod
+    def _resolver_filtro(valor: Optional[str], campo: str, catalogo: Type, errores: List[Dict[str, str]]):
+        if _vacio(valor):
+            return None
+        miembro = resolver_catalogo(valor, catalogo)
+        if miembro is None:
+            admitidos = ", ".join(m.value for m in catalogo)
+            errores.append(detalle(campo, f"Valor '{valor}' no reconocido. Valores admitidos: {admitidos}."))
+        return miembro
 
     @staticmethod
     def _con_valor_por_defecto(valor: Any, catalogo: Type, por_defecto: Any) -> Tuple[Any, Optional[str]]:
