@@ -7,8 +7,9 @@ __pycache__/
 .coverage
 htmlcov/
 
-# Base de datos local (estado, no código)
+# Base de datos local
 *.db
+*.db-journal
 
 # Secretos y configuración del editor
 .env
