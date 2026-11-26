@@ -20,5 +20,4 @@ Registro cronológico del flujo de trabajo. Cada entrada corresponde a un commit
 | 14 | T9 · Diseño de evolución | `feature/diseno-evolucion` | Diseñé las notificaciones de prioridad Alta (outbox transaccional, restricción única, reintentos con espera exponencial) y la validación de tienda contra el catálogo externo (timeout, reintento, caché, circuit breaker, registro pendiente ante indisponibilidad). Elegí código sobre Power Automate y documenté en qué caso usaría este último. |
 | 15 | T8 · README | `release/1.0.0` | Escribí el README: ejecución, pruebas, ejemplos, códigos de respuesta, supuestos, decisión descartada, limitación, estructura del proyecto, mapa de la documentación, flujo de ramas y dependencias con sus licencias. |
 | 16 | T10 · Bitácora de IA | `release/1.0.0` | Documenté el uso de IA: interacciones que influyeron en la entrega, qué acepté o cambié, cómo lo comprobé y reflexión final. |
-
-**Tiempo real invertido:** _(se completa al cierre)_
+| 17 | Experiencia | `release/1.0.0` | Agregué la descripción de tres proyectos anteriores (`00-experiencia.md`). |

@@ -144,4 +144,4 @@ Todos los datos usados son ficticios.
 
 ## Tiempo invertido
 
-**Tiempo real:** _(completar)_
+**Tiempo real invertido:** 2 horas.
