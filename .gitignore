@@ -1,0 +1,17 @@
+# Entorno y caché de Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Base de datos local (estado, no código)
+*.db
+
+# Secretos y configuración del editor
+.env
+.vscode/
+.idea/
+.DS_Store
