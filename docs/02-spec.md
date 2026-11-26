@@ -113,10 +113,10 @@ Sigo **Spec-Driven Development**: primero especifico (contexto), luego decido (A
 
 ### T10 · Bitácoras y cierre
 - **Rama:** `release/1.0.0`
-- **Archivos:** `docs/05-bitacora-ia.md`, `docs/06-bitacora-trabajo.md`, `CHANGELOG.md`
-- **Qué hace:** bitácora de uso de IA con reflexión final; cronología y tiempo real invertido; registro de cambios de la versión.
+- **Archivos:** `docs/05-bitacora-ia.md`, `docs/06-bitacora-trabajo.md`
+- **Qué hace:** bitácora de uso de IA con reflexión final; cronología y tiempo real invertido. La versión queda registrada con el tag `v1.0.0`.
 - **Terminado cuando:** las bitácoras coinciden con el historial de commits.
-- **Commit:** `docs(T10): completar bitácoras y changelog de la versión 1.0.0`
+- **Commit:** `docs(T10): completar bitácoras de IA y de trabajo`
 
 > `06-bitacora-trabajo.md` se crea en T0 y se actualiza al cerrar cada tarea; en T10 solo se completa el tiempo total.
 
